@@ -8,13 +8,13 @@
 [![Database](https://img.shields.io/badge/PostgreSQL-16-blue.svg)](https://www.postgresql.org/)
 
 ## 1.サービス概要
-本サービスは、PTA活動や子ども会の行事における「保護者同士の日程調整の負担」を解消するためのツールです。
+本サービスは、保護者懇談における「保護者ー教員間の日程調整の負担」を解消するためのツールです。
 回答者のユーザー登録を不要にし、スマートフォンから直感的に空き時間を回答できます。
 
-- **WebサイトURL**: https://your-app-domain.com
+- **WebサイトURL**: 
 - **テスト用ログイン情報**:
-  - Email: `guest@example.com`
-  - Password: `password1234`
+  - Email:
+  - Password:
 
 ---
 
