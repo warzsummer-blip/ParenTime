@@ -1,7 +1,7 @@
 # ParenTime
 教員（担任）向け日程調整Webアプリケーション
 # サービス名 (例: ParenTime)
-> 保護者-教員間の複雑な日程調整を3ステップで完結させるWebアプリケーション
+> 保護者-教員間の複雑な日程調整Webアプリケーション
 
 [![Ruby](https://img.shields.io/badge/Ruby-3.3.0-red.svg)](https://www.ruby-lang.org/)
 [![Rails](https://img.shields.io/badge/Rails-7.1.0-red.svg)](https://rubyonrails.org/)
