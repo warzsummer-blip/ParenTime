@@ -1,6 +1,6 @@
 # ParenTime
 保護者向け日程調整Webアプリケーション
-# サービス名 (例: parent-scheduler)
+# サービス名 (例: ParenTime)
 > 保護者間の複雑な日程調整を3ステップで完結させるWebアプリケーション
 
 [![Ruby](https://img.shields.io/badge/Ruby-3.3.0-red.svg)](https://www.ruby-lang.org/)
