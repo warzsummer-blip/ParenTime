@@ -58,6 +58,7 @@
 ```mermaid
 erDiagram
     USERS ||--o{ EVENTS : "creates"
+    USERS ||--o{ ATTENDEES : "in_charge_of"
     EVENTS ||--|{ CANDIDATES : "has"
     EVENTS ||--o{ ATTENDEES : "receives"
     ATTENDEES ||--|{ RESPONSES : "makes"
@@ -72,7 +73,7 @@ erDiagram
 
     EVENTS {
         bigint id PK
-        bigint user_id FK
+        bigint user_id FK "作成者（学年主任など）"
         string title "イベント名（例: 10月保護者懇談）"
         text description "案内文"
         integer slot_duration "枠の時間（例: 15分）"
@@ -89,7 +90,8 @@ erDiagram
     ATTENDEES {
         bigint id PK
         bigint event_id FK
-        bigint confirmed_candidate_id FK "確定した候補枠ID（未確定ならNULL）"
+        bigint user_id FK "★追加: 担当教員（担任の先生）"
+        bigint confirmed_candidate_id FK "確定枠ID（未確定ならNULL）"
         string parent_name "保護者名"
         string child_name "児童名"
         string grade_class "クラス（例: 3年1組）"
@@ -97,6 +99,12 @@ erDiagram
         string note "備考・連絡事項"
     }
 
+    RESPONSES {
+        bigint id PK
+        bigint attendee_id FK
+        bigint candidate_id FK
+        integer status "0: NG, 1: OK, 2: Pending(可)"
+    }
     RESPONSES {
         bigint id PK
         bigint attendee_id FK
