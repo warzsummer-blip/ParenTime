@@ -59,30 +59,47 @@
 erDiagram
     USERS ||--o{ EVENTS : "creates"
     EVENTS ||--|{ CANDIDATES : "has"
+    EVENTS ||--o{ ATTENDEES : "receives"
+    ATTENDEES ||--|{ RESPONSES : "makes"
     CANDIDATES ||--o{ RESPONSES : "has"
 
     USERS {
         bigint id PK
-        string email
-        string encrypted_password
-        string name
+        string email "教員ログイン用メール"
+        string encrypted_password "暗号化パスワード"
+        string name "教員名"
     }
+
     EVENTS {
         bigint id PK
         bigint user_id FK
-        string title
-        text description
-        string token
+        string title "イベント名（例: 10月保護者懇談）"
+        text description "案内文"
+        integer slot_duration "枠の時間（例: 15分）"
+        string token "保護者共有用URLトークン"
     }
+
     CANDIDATES {
         bigint id PK
         bigint event_id FK
-        datetime start_at
-        datetime end_at
+        datetime start_at "開始日時（例: 10/1 10:00）"
+        datetime end_at "終了日時（例: 10/1 10:15）"
     }
+
+    ATTENDEES {
+        bigint id PK
+        bigint event_id FK
+        bigint confirmed_candidate_id FK "確定した候補枠ID（未確定ならNULL）"
+        string parent_name "保護者名"
+        string child_name "児童名"
+        string grade_class "クラス（例: 3年1組）"
+        string sibling_info "兄弟・姉妹の情報（任意）"
+        string note "備考・連絡事項"
+    }
+
     RESPONSES {
         bigint id PK
+        bigint attendee_id FK
         bigint candidate_id FK
-        string respondent_name
-        integer status "0: NG, 1: OK, 2: Pending"
+        integer status "0: NG, 1: OK, 2: Pending(可)"
     }
