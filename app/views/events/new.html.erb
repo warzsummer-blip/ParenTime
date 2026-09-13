@@ -1,0 +1,24 @@
+<h1>新しい行事を追加</h1>
+
+<%= form_with model: @event, local: true do |f| %>
+  <div>
+    <%= f.label :title, "行事タイトル" %><br>
+    <%= f.text_field :title, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :description, "説明・案内文" %><br>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.label :slot_duration, "1枠あたりの時間（分）" %><br>
+    <%= f.number_field :slot_duration, value: 15 %>
+  </div>
+
+  <br>
+  <%= f.submit "作成する" %>
+<% end %>
+
+<br>
+<%= link_to "キャンセル", events_path %>

@@ -1,0 +1,36 @@
+<h1><%= @event.title %></h1>
+<p><%= simple_format(@event.description) %></p>
+<p><strong>共有URL用トークン:</strong> <%= @event.token %></p>
+
+<%= link_to "← 一覧に戻る", events_path %>
+
+<hr>
+
+<h3>候補日時一覧</h3>
+<ul>
+  <% @candidates.each do |candidate| %>
+    <li><%= candidate.start_at.strftime("%Y/%m/%d %H:%M") %> 〜 <%= candidate.end_at.strftime("%H:%M") %></li>
+  <% end %>
+</ul>
+
+<h3>保護者回答状況</h3>
+<table border="1" cellpadding="5">
+  <thead>
+    <tr>
+      <th>児童名</th>
+      <th>保護者名</th>
+      <th>クラス</th>
+      <th>備考</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @attendees.each do |attendee| %>
+      <tr>
+        <td><%= attendee.child_name %></td>
+        <td><%= attendee.parent_name %></td>
+        <td><%= attendee.grade_class %></td>
+        <td><%= attendee.note %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
