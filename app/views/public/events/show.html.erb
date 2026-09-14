@@ -1,0 +1,82 @@
+<h1><%= @event.title %></h1>
+<p><%= simple_format(@event.description) %></p>
+
+<hr>
+
+<h2>保護者回答フォーム</h2>
+
+<% if notice %>
+  <p style="color: green;"><strong><%= notice %></strong></p>
+<% end %>
+
+<%= form_with model: [:public, @event, @attendee], url: respond_public_event_path(@event.token), method: :post, local: true do |f| %>
+  
+  <% if @attendee.errors.any? %>
+    <div style="color: red;">
+      <h3>入力内容に不備があります：</h3>
+      <ul>
+        <% @attendee.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h3>1. 基本情報</h3>
+  <div>
+    <%= f.label :parent_name, "保護者氏名 *" %><br>
+    <%= f.text_field :parent_name, required: true %>
+  </div>
+  <br>
+  <div>
+    <%= f.label :child_name, "児童氏名 *" %><br>
+    <%= f.text_field :child_name, required: true %>
+  </div>
+  <br>
+  <div>
+    <%= f.label :grade_class, "学年・組 *" %><br>
+    <%= f.text_field :grade_class, placeholder: "例: 3年1組", required: true %>
+  </div>
+  <br>
+  <div>
+    <%= f.label :sibling_info, "きょうだい情報（校内に在籍している場合）" %><br>
+    <%= f.text_field :sibling_info, placeholder: "例: 弟（1年2組）" %>
+  </div>
+
+  <hr>
+
+  <h3>2. 希望日時の選択</h3>
+  <table border="1" cellpadding="8" style="border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>日時枠</th>
+        <th>可否</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.fields_for :responses do |r_form| %>
+        <% candidate = r_form.object.candidate %>
+        <tr>
+          <td>
+            <%= candidate.start_at.strftime("%Y/%m/%d %H:%M") %> 〜 <%= candidate.end_at.strftime("%H:%M") %>
+            <%= r_form.hidden_field :candidate_id %>
+          </td>
+          <td>
+            <%= r_form.radio_button :status, "ok" %> <%= r_form.label :status_ok, "◯ 可能" %>
+            <%= r_form.radio_button :status, "pending" %> <%= r_form.label :status_pending, "△ どちらでも" %>
+            <%= r_form.radio_button :status, "ng" %> <%= r_form.label :status_ng, "✕ 不可" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+  <div>
+    <%= f.label :note, "備考・連絡事項" %><br>
+    <%= f.text_area :note, rows: 3 %>
+  </div>
+
+  <br>
+  <%= f.submit "回答を送信する", data: { confirm: "この内容で送信してよろしいですか？" } %>
+<% end %>
